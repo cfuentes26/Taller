@@ -5,6 +5,8 @@
  */
 package taller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Controller {
 
     Persona classroom[] = new Persona[1];
-    Scanner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
 
     public Controller() {
 
@@ -61,6 +63,11 @@ public class Controller {
             case 3:
                 System.exit(0);
                 break;
+            /*case 4:
+                 System.out.println("digite posicion a eliminar");
+                 deletearray(classroom, sc.nextInt());
+                 this.showArray
+                break;*/
             default:
                 System.out.println("Introduzca una opcion valida");
                 this.loadmenu();
@@ -80,6 +87,7 @@ public class Controller {
             String apellido = sc.nextLine();
             System.out.println("Escriba fecha de nacimiento");
             String fecha_nacimiento = sc.nextLine();
+            validatedate(fecha_nacimiento);
             System.out.println("Escriba identificacion");
             String identificacion = sc.nextLine();
             System.out.println("Escriba el genero");
@@ -88,12 +96,14 @@ public class Controller {
             String direccion = sc.nextLine();
             System.out.println("Escriba un email");
             String email = sc.nextLine();
+            validateEmail(email);
+            
             System.out.println("Escriba un telefono");
             String telefono = sc.nextLine();
             System.out.println("Escriba un celular");
             String celular = sc.nextLine();
 
-            classroom[i] = new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion, email, telefono, celular);
+            classroom[i] = new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion,email , telefono, celular);
 
         }
         this.loadmenu();
@@ -107,5 +117,51 @@ public class Controller {
         }
         this.loadmenu();
     }
-
+ 
+          public static boolean validateEmail(String email){
+     
+     Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+ 
+        
+        Matcher mather = pattern.matcher(email);
+ 
+        if (mather.find() == true) {
+            System.out.println("El email ingresado es válido." );
+        } else {
+            System.out.println("El email ingresado es inválido.");
+            System.out.println("escriba un nuevo email");
+            email=sc.nextLine();
+            validateEmail(email);
+           
+        }
+        
+        return mather.matches();
+    
+}
+        public static boolean validatedate(String fecha) {
+       
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            formatoFecha.setLenient(false);
+            formatoFecha.parse(fecha);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    
+    }
+        
+     
+    /*private  static Object[]  deleteArray (Object[] arrayObjetos, int i) {
+    Object[] nuevoArray = new Object[arrayObjetos.length - 1];
+     if (i > 0){
+           System.arraycopy(arrayObjetos, 0, nuevoArray, 0, i);
+     }
+     if (nuevoArray.length > i){
+      System.arraycopy(arrayObjetos, i + 1, nuevoArray, i, nuevoArray.length - i);
+     }
+     return nuevoArray;
+   }*/
 }

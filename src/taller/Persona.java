@@ -5,9 +5,6 @@
  */
 package taller;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  * @author estudiante
@@ -111,6 +108,6 @@ public class Persona {
         this.celular = celular;
     }
     
-     
+
 
 }
