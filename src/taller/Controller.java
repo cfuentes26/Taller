@@ -7,6 +7,9 @@ package taller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -63,6 +66,9 @@ public class Controller {
             case 3:
                 System.exit(0);
                 break;
+            case 4:
+                this.showdate();
+                break;
             /*case 4:
                  System.out.println("digite posicion a eliminar");
                  deletearray(classroom, sc.nextInt());
@@ -102,9 +108,10 @@ public class Controller {
             String telefono = sc.nextLine();
             System.out.println("Escriba un celular");
             String celular = sc.nextLine();
-
+            
+            
             classroom[i] = new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion,email , telefono, celular);
-
+            
         }
         this.loadmenu();
     }
@@ -112,8 +119,8 @@ public class Controller {
     public void showArray() {
         for (int i = 0; i < classroom.length; i++) {
 
-            System.out.println(classroom[i].getNombre() + "/" + classroom[i].getApellidos() + "/" + classroom[i].getFecha_nacimiento() + "/" + classroom[i].getIdentificacion() + "/" + classroom[i].getGenero() + "/" + classroom[i].getDireccion() + "/" + classroom[i].getEmail() + "/" + classroom[i].getTelefono() + "/" + classroom[i].getCelular());
-
+            System.out.println(classroom[i].getNombre() + "/" + classroom[i].getApellidos() + "/" + classroom[i].getFecha_nacimiento() + "/" + classroom[i].getIdentificacion() + "/" + classroom[i].getGenero() + "/" + classroom[i].getDireccion() + "/" + classroom[i].getEmail() + "/" + classroom[i].getTelefono() + "/" + classroom[i].getCelular()+  "/"+calculateEdad());
+            
         }
         this.loadmenu();
     }
@@ -141,7 +148,7 @@ public class Controller {
     
 }
         public static boolean validatedate(String fecha) {
-       
+        boolean res=true;
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             formatoFecha.setLenient(false);
@@ -150,8 +157,37 @@ public class Controller {
             return false;
         }
         return true;
+        }  
+        
+        public void showdate(){
+                      String fecha;
+       
+   
+        System.out.println("Dame la fecha");
+         boolean res=true;
+        res=validatedate(sc.nextLine());
+        if(res==true){
+            System.out.println("La fecha es valida");
+             }else
+                 System.out.println("La fecha no es valida");
+         }
+        
+    /**
+     *
+     */
+    public int calculateEdad() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaNac = LocalDate.parse(sc.nextLine(), fmt);
+        LocalDate ahora = LocalDate.now();
+
+        Period periodo = Period.between(fechaNac, ahora);
+
     
+           return periodo.getYears();
     }
+       
+    
+    
         
      
     /*private  static Object[]  deleteArray (Object[] arrayObjetos, int i) {
