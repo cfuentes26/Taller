@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -21,8 +22,10 @@ import javax.swing.JOptionPane;
  * @author estudiante
  */
 public class Controller {
+   
+    ArrayList<Persona> classroom = new ArrayList();
+      ArrayList<MasaCorporal> hsitorial = new ArrayList();
 
-    Persona classroom[] = new Persona[1];
     static Scanner sc = new Scanner(System.in);
 
     public Controller() {
@@ -67,13 +70,8 @@ public class Controller {
                 System.exit(0);
                 break;
             case 4:
-                this.showdate();
-                break;
-            /*case 4:
-                 System.out.println("digite posicion a eliminar");
-                 deletearray(classroom, sc.nextInt());
-                 this.showArray
-                break;*/
+               break;
+            
             default:
                 System.out.println("Introduzca una opcion valida");
                 this.loadmenu();
@@ -84,7 +82,7 @@ public class Controller {
     }
 
     public void createArray() {
-        for (int i = 0; i < classroom.length; i++) {
+       
 
             System.out.println("Escribe un nombre");
             String nombre = sc.nextLine();
@@ -108,18 +106,16 @@ public class Controller {
             String telefono = sc.nextLine();
             System.out.println("Escriba un celular");
             String celular = sc.nextLine();
+            classroom.add(new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion,email , telefono, celular));
             
-            
-            classroom[i] = new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion,email , telefono, celular);
-            
-        }
+        
         this.loadmenu();
     }
 
     public void showArray() {
-        for (int i = 0; i < classroom.length; i++) {
+        for (int i = 0; i <= classroom.size(); i++) {
 
-            System.out.println(classroom[i].getNombre() + "/" + classroom[i].getApellidos() + "/" + classroom[i].getFecha_nacimiento() + "/" + classroom[i].getIdentificacion() + "/" + classroom[i].getGenero() + "/" + classroom[i].getDireccion() + "/" + classroom[i].getEmail() + "/" + classroom[i].getTelefono() + "/" + classroom[i].getCelular()+  "/"+calculateEdad());
+            System.out.println(classroom.get(i)/*.getNombre() + "/" + classroom.get(i).getApellidos() + "/" + classroom.get(i).getFecha_nacimiento() + "/" + classroom.get(i).getIdentificacion() + "/" + classroom.get(i).getGenero() + "/" + classroom.get(i).getDireccion() + "/" + classroom.get(i).getEmail() + "/" + classroom.get(i).getTelefono() + "/" + classroom.get(i).getCelular()+  "/"+calculateEdad()*/);
             
         }
         this.loadmenu();
