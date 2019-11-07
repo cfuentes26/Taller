@@ -5,12 +5,14 @@
  */
 package taller;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author estudiante
  */
 public class Persona {
-      private String nombre;
+    private String nombre;
     private String apellidos;
     private String fecha_nacimiento;
     private String identificacion;
@@ -19,7 +21,7 @@ public class Persona {
     private String email;
     private String telefono;
     private String celular;
-    Persona classroom[] = new Persona[1];
+    ArrayList<MasaCorporal> historial = new ArrayList();
     
 
     public Persona(String nombre, String apellidos,String fecha_nacimiento, String identificacion, String genero, String direccion, String email, String telefono, String celular) {

@@ -16,32 +16,26 @@ public class MasaCorporal {
    
      private double peso;
      private double altura;
+     double imc;
 
-    public MasaCorporal( double peso, double altura) {
-      
+    public MasaCorporal(double peso, double altura, double imc) {
         this.peso = peso;
         this.altura = altura;
+        this.imc = imc;
     }
-
-   
-
-   
 
     public double getPeso() {
         return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
     }
 
     public double getAltura() {
         return altura;
     }
 
-    public void setAltura(double altura) {
-        this.altura = altura;
+    public double getImc() {
+        return imc;
     }
+
      
     
     

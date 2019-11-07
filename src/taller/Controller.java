@@ -22,9 +22,9 @@ import javax.swing.JOptionPane;
  * @author estudiante
  */
 public class Controller {
-   
+
     ArrayList<Persona> classroom = new ArrayList();
-      ArrayList<MasaCorporal> historial = new ArrayList();
+    ArrayList<MasaCorporal> historial = new ArrayList();
 
     static Scanner sc = new Scanner(System.in);
 
@@ -37,9 +37,9 @@ public class Controller {
         try {
 
             System.out.println("1.Crear Array\n "
-                             + "2.Mostrar Array\n "
-                             + "3.Historial masa corporal\n"
-                             + "4.Salir");
+                    + "2.Mostrar Array\n "
+                    + "3.Historial masa corporal\n"
+                    + "4.Salir");
             Scanner sc = new Scanner(System.in);
 
             this.optionselected(sc.nextInt());
@@ -68,20 +68,30 @@ public class Controller {
                 this.loadmenu();
                 break;
             case 3:
-          System.out.println("Escribe peso");
-          double peso = sc.nextDouble();
-           System.out.println("Escrube altura");
-            double altura = sc.nextDouble();
-           historial.add(new MasaCorporal( peso, altura));
-            double imc = calcularIMC(altura, peso);
-                this.validarimc(imc);
-             
-                ;
+
+                int opc;
+                System.out.println("1.Agregar registro\n "
+                        + "2.Mostrar historial\n ");
+                opc = sc.nextInt();
+
+                switch (opc) {
+                    case 1:
+                        this.addhistorial();
+                        break;
+                    case 2:
+                        this.showhistorial();
+                        break;
+                    default:
+                        System.out.println("Introduzca una opcion valida");
+                        break;
+
+                }
+
                 break;
             case 4:
-               System.exit(0);
+                System.exit(0);
                 break;
-            
+
             default:
                 System.out.println("Introduzca una opcion valida");
                 this.loadmenu();
@@ -92,34 +102,33 @@ public class Controller {
     }
 
     public void createArray() {
-       
-/*String nombre=JOptionPane.showInputDialog("Escribe un nombre");*/
-            System.out.println("Escribe un nombre");
-            String nombre = sc.nextLine();
 
-            System.out.println("Escribe un apellido");
-            String apellido = sc.nextLine();
-            System.out.println("Escriba fecha de nacimiento");
-            String fecha_nacimiento = sc.nextLine();
-            validatedate(fecha_nacimiento);
-            System.out.println("Escriba identificacion");
-            String identificacion = sc.nextLine();
-            System.out.println("Escriba el genero");
-            String genero = sc.nextLine();
-            System.out.println("Escriba una direccion");
-            String direccion = sc.nextLine();
-            System.out.println("Escriba un email");
-            String email = sc.nextLine();
-            validateEmail(email);
-            
-            System.out.println("Escriba un telefono");
-            String telefono = sc.nextLine();
-            System.out.println("Escriba un celular");
-            String celular = sc.nextLine();
-            classroom.add(new Persona(nombre, apellido, fecha_nacimiento, 
-                    identificacion, genero, direccion,email , telefono, celular));
-            
-        
+        /*String nombre=JOptionPane.showInputDialog("Escribe un nombre");*/
+        System.out.println("Escribe un nombre");
+        String nombre = sc.nextLine();
+
+        System.out.println("Escribe un apellido");
+        String apellido = sc.nextLine();
+        System.out.println("Escriba fecha de nacimiento");
+        String fecha_nacimiento = sc.nextLine();
+        validatedate(fecha_nacimiento);
+        System.out.println("Escriba identificacion");
+        String identificacion = sc.nextLine();
+        System.out.println("Escriba el genero");
+        String genero = sc.nextLine();
+        System.out.println("Escriba una direccion");
+        String direccion = sc.nextLine();
+        System.out.println("Escriba un email");
+        String email = sc.nextLine();
+        validateEmail(email);
+
+        System.out.println("Escriba un telefono");
+        String telefono = sc.nextLine();
+        System.out.println("Escriba un celular");
+        String celular = sc.nextLine();
+        classroom.add(new Persona(nombre, apellido, fecha_nacimiento,
+                identificacion, genero, direccion, email, telefono, celular));
+
         this.loadmenu();
     }
 
@@ -127,63 +136,70 @@ public class Controller {
         for (int i = 0; i <= classroom.size(); i++) {
 
             System.out.println(classroom.get(i).getNombre() + "/" + classroom.get(i).getApellidos() + "/" + classroom.get(i).getFecha_nacimiento() + "/" + classroom.get(i).getIdentificacion() + "/" + classroom.get(i).getGenero() + "/" + classroom.get(i).getDireccion() + "/" + classroom.get(i).getEmail() + "/" + classroom.get(i).getTelefono() + "/" + classroom.get(i).getCelular());
-            
-         
+
         }
         this.loadmenu();
     }
- 
-          public static boolean validateEmail(String email){
-     
-     Pattern pattern = Pattern
+
+    public void addhistorial() {
+         
+        System.out.println("escriba peso");
+        double peso = sc.nextDouble();
+        System.out.println("escriba altura");
+        double altura = sc.nextDouble();
+       
+        double imc = calcularIMC(peso, altura);
+        
+        historial.add(new MasaCorporal(peso, altura,imc));
+    }
+
+    public void showhistorial() {
+        for (int i = 0; i <= classroom.size(); i++) {
+            System.out.println(historial.get(i).getPeso() + "/" + historial.get(i).getAltura()+"/"+historial.get(i).getImc());
+            
+        }
+
+    }
+
+    public static boolean validateEmail(String email) {
+
+        Pattern pattern = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
- 
-        
+
         Matcher mather = pattern.matcher(email);
- 
+
         if (mather.find() == true) {
-            System.out.println("El email ingresado es válido." );
+            System.out.println("El email ingresado es válido.");
         } else {
             System.out.println("El email ingresado es inválido.");
             System.out.println("escriba un nuevo email");
-            email=sc.nextLine();
+            email = sc.nextLine();
             validateEmail(email);
-           
+
         }
-        
+
         return mather.matches();
-    
-}
-        public static boolean validatedate(String fecha) {
-        boolean res=true;
+
+    }
+
+    public static boolean validatedate(String fecha) {
+        boolean res = true;
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             formatoFecha.setLenient(false);
             formatoFecha.parse(fecha);
-            if(res==true){
-            System.out.println("La fecha es valida");
-             }else
-                 System.out.println("La fecha no es valida");
+            if (res == true) {
+                System.out.println("La fecha es valida");
+            } else {
+                System.out.println("La fecha no es valida");
+            }
         } catch (ParseException e) {
             return false;
         }
         return true;
-        }  
-        
-        public void showdate(){
-                      String fecha;
-       
-   
-        System.out.println("Dame la fecha");
-         boolean res=true;
-        res=validatedate(sc.nextLine());
-        if(res==true){
-            System.out.println("La fecha es valida");
-             }else
-                 System.out.println("La fecha no es valida");
-         }
-        
+    }
+
     /**
      *
      */
@@ -194,51 +210,41 @@ public class Controller {
 
         Period periodo = Period.between(fechaNac, ahora);
 
-    
-           return periodo.getYears();
+        return periodo.getYears();
     }
-       
-    
-    public static double calcularIMC(double altura, double peso){
-        double imc = peso/(Math.pow(altura, 2));
-        return Math.rint(imc*100)/100;
+
+    public static double calcularIMC( double peso,double altura) {
+        double imc = peso / (altura * altura)*10000;
+        validarimc(imc);
+        return imc; 
         
     }
-       public void validarimc(double imc){
-          
-           String clasificacion = "";
-           if(imc < 16){
+
+    public static void validarimc(double imc) {
+
+        String clasificacion = "";
+        if (imc < 16) {
             clasificacion = "Infrapeso: Delgadez severa";
-        } else if(imc < 17){
+        } else if (imc < 17) {
             clasificacion = "Infrapeso: Delgadez moderada";
-        } else if(imc < 18.50){
+        } else if (imc < 18.50) {
             clasificacion = "Infrapeso: Delgadez aceptable";
-        } else if(imc < 25){
+        } else if (imc < 25) {
             clasificacion = "Peso normal";
-        } else if(imc < 30){
+        } else if (imc < 30) {
             clasificacion = "Sobrepeso";
-        } else if(imc < 35){
+        } else if (imc < 35) {
             clasificacion = "Obeso: Tipo 1";
-        } else if(imc < 40){
+        } else if (imc < 40) {
             clasificacion = "Obeso: Tipo 2";
         } else {
             clasificacion = "Obeso: Tipo 3";
         }
- 
+
         System.out.println("\nTu índice de masa corporal es: " + imc);
         System.out.println("Atendiendo al IMC, tiene: " + clasificacion);
- 
+
     }
-        
-     
-    /*private  static Object[]  deleteArray (Object[] arrayObjetos, int i) {
-    Object[] nuevoArray = new Object[arrayObjetos.length - 1];
-     if (i > 0){
-           System.arraycopy(arrayObjetos, 0, nuevoArray, 0, i);
-     }
-     if (nuevoArray.length > i){
-      System.arraycopy(arrayObjetos, i + 1, nuevoArray, i, nuevoArray.length - i);
-     }
-     return nuevoArray;
-   }*/
+
+   
 }
