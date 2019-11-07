@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 public class Controller {
    
     ArrayList<Persona> classroom = new ArrayList();
-      ArrayList<MasaCorporal> hsitorial = new ArrayList();
+      ArrayList<MasaCorporal> historial = new ArrayList();
 
     static Scanner sc = new Scanner(System.in);
 
@@ -38,7 +38,8 @@ public class Controller {
 
             System.out.println("1.Crear Array\n "
                              + "2.Mostrar Array\n "
-                             + "3.Salir");
+                             + "3.Historial masa corporal\n"
+                             + "4.Salir");
             Scanner sc = new Scanner(System.in);
 
             this.optionselected(sc.nextInt());
@@ -61,16 +62,25 @@ public class Controller {
                 try {
 
                     this.showArray();
-                } catch (NullPointerException e) {
+                } catch (IndexOutOfBoundsException e) {
                 }
                 System.out.println("Arreglo vacio");
                 this.loadmenu();
                 break;
             case 3:
-                System.exit(0);
+          System.out.println("Escribe peso");
+          double peso = sc.nextDouble();
+           System.out.println("Escrube altura");
+            double altura = sc.nextDouble();
+           historial.add(new MasaCorporal( peso, altura));
+            double imc = calcularIMC(altura, peso);
+                this.validarimc(imc);
+             
+                ;
                 break;
             case 4:
-               break;
+               System.exit(0);
+                break;
             
             default:
                 System.out.println("Introduzca una opcion valida");
@@ -83,7 +93,7 @@ public class Controller {
 
     public void createArray() {
        
-
+/*String nombre=JOptionPane.showInputDialog("Escribe un nombre");*/
             System.out.println("Escribe un nombre");
             String nombre = sc.nextLine();
 
@@ -106,7 +116,8 @@ public class Controller {
             String telefono = sc.nextLine();
             System.out.println("Escriba un celular");
             String celular = sc.nextLine();
-            classroom.add(new Persona(nombre, apellido, fecha_nacimiento, identificacion, genero, direccion,email , telefono, celular));
+            classroom.add(new Persona(nombre, apellido, fecha_nacimiento, 
+                    identificacion, genero, direccion,email , telefono, celular));
             
         
         this.loadmenu();
@@ -115,8 +126,9 @@ public class Controller {
     public void showArray() {
         for (int i = 0; i <= classroom.size(); i++) {
 
-            System.out.println(classroom.get(i)/*.getNombre() + "/" + classroom.get(i).getApellidos() + "/" + classroom.get(i).getFecha_nacimiento() + "/" + classroom.get(i).getIdentificacion() + "/" + classroom.get(i).getGenero() + "/" + classroom.get(i).getDireccion() + "/" + classroom.get(i).getEmail() + "/" + classroom.get(i).getTelefono() + "/" + classroom.get(i).getCelular()+  "/"+calculateEdad()*/);
+            System.out.println(classroom.get(i).getNombre() + "/" + classroom.get(i).getApellidos() + "/" + classroom.get(i).getFecha_nacimiento() + "/" + classroom.get(i).getIdentificacion() + "/" + classroom.get(i).getGenero() + "/" + classroom.get(i).getDireccion() + "/" + classroom.get(i).getEmail() + "/" + classroom.get(i).getTelefono() + "/" + classroom.get(i).getCelular());
             
+         
         }
         this.loadmenu();
     }
@@ -149,6 +161,10 @@ public class Controller {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             formatoFecha.setLenient(false);
             formatoFecha.parse(fecha);
+            if(res==true){
+            System.out.println("La fecha es valida");
+             }else
+                 System.out.println("La fecha no es valida");
         } catch (ParseException e) {
             return false;
         }
@@ -183,7 +199,36 @@ public class Controller {
     }
        
     
-    
+    public static double calcularIMC(double altura, double peso){
+        double imc = peso/(Math.pow(altura, 2));
+        return Math.rint(imc*100)/100;
+        
+    }
+       public void validarimc(double imc){
+          
+           String clasificacion = "";
+           if(imc < 16){
+            clasificacion = "Infrapeso: Delgadez severa";
+        } else if(imc < 17){
+            clasificacion = "Infrapeso: Delgadez moderada";
+        } else if(imc < 18.50){
+            clasificacion = "Infrapeso: Delgadez aceptable";
+        } else if(imc < 25){
+            clasificacion = "Peso normal";
+        } else if(imc < 30){
+            clasificacion = "Sobrepeso";
+        } else if(imc < 35){
+            clasificacion = "Obeso: Tipo 1";
+        } else if(imc < 40){
+            clasificacion = "Obeso: Tipo 2";
+        } else {
+            clasificacion = "Obeso: Tipo 3";
+        }
+ 
+        System.out.println("\nTu índice de masa corporal es: " + imc);
+        System.out.println("Atendiendo al IMC, tiene: " + clasificacion);
+ 
+    }
         
      
     /*private  static Object[]  deleteArray (Object[] arrayObjetos, int i) {
